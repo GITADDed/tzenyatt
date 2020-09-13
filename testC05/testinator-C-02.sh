@@ -2,7 +2,7 @@
 
 #REMOVE 'EVAL'S BEFORE POSTING
 
-#script by lphoenix for School 21
+#script by tzenyatt for School 21
 #improved by: (place your name here if you make any improvements)
 
 #READ IT FIRST
