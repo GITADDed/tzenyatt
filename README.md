@@ -1,4 +1,5 @@
 # tzenyatt
+=====================
 
 # This repository creating for my local using.
 
@@ -6,6 +7,6 @@
 	Launch sh file from dir testC05. In checking fiels nothing be main. or a.out
 	Good luck for testing.
 ## SOSCI
-====================
+***
 ### OPA
 	1)hoghgo
