@@ -53,3 +53,6 @@ dkms.conf
 
 # Out files.
 *.out
+
+# IDE Folders
+.idea
