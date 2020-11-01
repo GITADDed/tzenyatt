@@ -3,8 +3,15 @@
 #include <stdlib.h>
 #include <ctype.h>
 #include <unistd.h>
+#include <fcntl.h>
 #include "libft.h"
 
+
+char 	toAp(unsigned int c, char ch)
+{
+	c++;
+	return (ft_toupper(ch));
+}
 
 int main(void)
 {
@@ -182,9 +189,9 @@ int main(void)
 //	char str65[20] = "Sabstrsoooo12o\0";
 //	char str66[20] = "olik\0";
 //	printf("MEMCCPY ####################\n");
-//	ft_memccpy(str43, str44, 's', 8);
+//	printf("what return %s\n",ft_memccpy(str43, str44, 's', 8));
 //	printf("your func: %s\n", str43);
-//	memccpy(str45, str46, 's', 8);
+//	printf("what return %s\n", memccpy(str45, str46, 's', 8));
 //	printf("orig func: %s\n", str45);
 // 	ft_memccpy(str48, str47, 'o', 8);
 // 	printf("your func: %s\n", str48);
@@ -307,12 +314,27 @@ int main(void)
 //	printf("must be: Prvt, t poras, nt I zs poras\n");
 
 
-	printf("SPLIT ####################\n");
-	char *str89 = "strlen strbub strkek strlul";
-	char **stre = ft_split(str89, ' ');
-	for (int i = 0; i < 4; ++i) {
-		printf("%s\n", *(stre + i));
-	}
+//	printf("SPLIT ####################\n");
+//	char *str89 = "strlen strbub strkek strlul";
+//	char **stre = ft_split(str89, ' ');
+//	for (int i = 0; i < 4; ++i) {
+//		printf("%s\n", *(stre + i));
+//	}
 
+	printf("ITOA ####################\n");
+	int n = 214868369;
+	printf("%s\n",ft_itoa(n));
+	printf("%s\n",ft_itoa(0));
+
+	printf("STRMAPI ####################\n");
+	char *str = "pitetr";
+	printf("%s\n", ft_strmapi(str, toAp));
+
+	int fd = open("list.txt", O_WRONLY);
+//	ft_putnbr_fd(123, fd);
+	ft_putstr_fd("oo", fd);
+//	ft_putendl_fd(" uppercot", fd);
+//	ft_putchar_fd('L', fd);
+	close(fd);
 	return 0;
 }

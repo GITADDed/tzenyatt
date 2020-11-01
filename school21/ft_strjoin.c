@@ -13,10 +13,10 @@
 #include "libft.h"
 #include <stdlib.h>
 
-char *ft_strjoin(char const *s1, char const *s2)
+char		*ft_strjoin(char const *s1, char const *s2)
 {
 	char		*pointer;
-	size_t 		i;
+	size_t		i;
 
 	pointer = malloc((ft_strlen(s1) + ft_strlen(s2) + 1) * sizeof(char));
 	if (pointer == 0)

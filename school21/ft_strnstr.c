@@ -32,7 +32,7 @@ char				*ft_strnstr(char *src, char *sough, int n_ch)
 	int j;
 
 	i = 0;
-	while (*(src + i)  != '\0' && i < n_ch)
+	while (*(src + i) != '\0' && i < n_ch)
 	{
 		if ((j = my_string_compare(src + i, sough)) == -1)
 		{

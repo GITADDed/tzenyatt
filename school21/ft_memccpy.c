@@ -26,10 +26,10 @@ void	*ft_memccpy(void *dest, const void *src, int c, size_t n)
 		if (*(temp_src + i) == c)
 		{
 			*(temp_dest + i) = c;
-			return (dest);
+			return (temp_dest + i + 1);
 		}
 		*(temp_dest + i) = *(temp_src + i);
 		++i;
 	}
-	return (dest);
+	return (temp_dest + i + 1);
 }

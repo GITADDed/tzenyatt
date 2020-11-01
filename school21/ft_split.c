@@ -13,7 +13,7 @@
 #include "libft.h"
 #include <stdlib.h>
 
-static size_t		ft_how_many_chr(char const *s, char c)
+static size_t		lenchr(char const *s, char c)
 {
 	size_t len;
 
@@ -37,7 +37,7 @@ static size_t		ft_lenword(char const *s, char c)
 	return (len);
 }
 
-char 		*ft_word(char const *s, char c, size_t *i)
+char				*ft_word(char const *s, char c, size_t *i)
 {
 	size_t		j;
 	char		*pointer;
@@ -62,8 +62,7 @@ char				**ft_split(char const *s, char c)
 	size_t		j;
 	char		**pointer_on_strings;
 
-	pointer_on_strings = (char **)malloc((ft_how_many_chr(s, c) + 1) * sizeof
-			(char *));
+	pointer_on_strings = (char **)malloc((lenchr(s, c) + 1) * sizeof(char *));
 	if (pointer_on_strings == 0)
 		return (0);
 	i = 0;
