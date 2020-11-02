@@ -1,34 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_atoi.c                                          :+:      :+:    :+:   */
+/*   ft_lstnew.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tzenyatt <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/10/28 20:06:50 by tzenyatt          #+#    #+#             */
-/*   Updated: 2020/10/28 20:06:53 by tzenyatt         ###   ########.fr       */
+/*   Created: 2020/11/02 13:50:17 by tzenyatt          #+#    #+#             */
+/*   Updated: 2020/11/02 13:50:22 by tzenyatt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int		ft_atoi(const char *str)
-{
-	int sign;
-	int num;
+#include "libft.h"
+#include <stdlib.h>
 
-	sign = -1;
-	num = 0;
-	while (*str == ' ' || *str == 9)
-		++str;
-	if (*str == '-')
-		sign *= -1;
-	if (*str == '+' || *str == '-')
-		str++;
-	if (*str != '+' && *str != '-' && *str < 48 && *str > 57)
+t_list		*ft_lstnew(void *content)
+{
+	t_list *node;
+
+	node = malloc(sizeof(t_list));
+	if (node == 0)
 		return (0);
-	while (*str >= 48 && *str <= 57)
-	{
-		num = num * 10 - (*str - 48);
-		++str;
-	}
-	return (num * sign);
+	node->content = content;
+	node->next = 0;
+	return (node);
 }

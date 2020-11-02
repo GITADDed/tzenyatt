@@ -1,34 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_atoi.c                                          :+:      :+:    :+:   */
+/*   ft_lstclear.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tzenyatt <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/10/28 20:06:50 by tzenyatt          #+#    #+#             */
-/*   Updated: 2020/10/28 20:06:53 by tzenyatt         ###   ########.fr       */
+/*   Created: 2020/11/02 13:52:18 by tzenyatt          #+#    #+#             */
+/*   Updated: 2020/11/02 13:52:20 by tzenyatt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int		ft_atoi(const char *str)
-{
-	int sign;
-	int num;
+#include "libft.h"
 
-	sign = -1;
-	num = 0;
-	while (*str == ' ' || *str == 9)
-		++str;
-	if (*str == '-')
-		sign *= -1;
-	if (*str == '+' || *str == '-')
-		str++;
-	if (*str != '+' && *str != '-' && *str < 48 && *str > 57)
-		return (0);
-	while (*str >= 48 && *str <= 57)
+void		ft_lstclear(t_list **lst, void (*del)(void *))
+{
+	t_list *node;
+
+	node = *lst;
+	while (node->next)
 	{
-		num = num * 10 - (*str - 48);
-		++str;
+		ft_lstdelone(node, del);
+		node++;
 	}
-	return (num * sign);
+	lst = 0;
 }

@@ -1,51 +1,100 @@
-#include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
-#include <ctype.h>
-#include <unistd.h>
-#include <fcntl.h>
 #include "libft.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <setjmp.h>
 
-
-char 	toAp(unsigned int c, char ch)
+void		print_error(char *s1, char *s2, char *test_name)
 {
-	c++;
-	return (ft_toupper(ch));
+	printf("Wrong!!! Test number: %s\n your func: %s\n orig func: %s\n",
+			test_name, s1, s2);
 }
 
-int main(void)
+void		printok(char *test_name)
 {
-//	int ch = 0;
+	printf("%s [OK]\n", test_name);
+}
+
+void		strdiff(char *s1, char *s2, char *test_name)
+{
+	char *str1 = s1;
+	char *str2 = s2;
+
+	while (*s1 && *s2)
+	{
+		if (*s1 != *s2)
+		{
+			print_error(str1, str2, test_name);
+			return;
+		}
+		s1++;
+		s2++;
+	}
+	printok(test_name);
+}
+
+void		strrchar_test(char *(*f1)(const char *, int),
+		char *(*f2)(const char *, int), char *str, int ch, char *test_name)
+{
+	char *res1 = f1(str, ch);
+	char *res2 = f2(str, ch);
+	if (res1 != res2)
+		print_error(res1, res2, test_name);
+	else
+		printok(test_name);
+}
+
+static jmp_buf buf;
+
+int			main(void)
+{
+//		int ch = 0;
 //	char *str1 = "Cloring Cal";
 //	char *str2 = "htunetClorosCloringhuceoalhcpcirch";
 //	char *str3 = "Cloring";
 //	char *str4 = "Cloring";
 //	char *str5 = "htunetClorosCloringhuceoalhcpcirch";
 //	char *str6 = "Cloring";
-	char *str7 = "999999999999999999999999";
-	char *str8 = "					-874.e";
-	char *str9 = "           -894.e";
-	char *str10 = " ---+++--x874.e";
-	char *str11 = "			 b----++++-77.e";
-	char *str12 = "b8374";
-	char *str13 = " -b334";
-	char *str14 = "+874.e";
-	char *str15 = " -2147483649";
-	char *str16 = "+2147483648";
+//	char *str7 = "9999999999999999999999999999999999999999999999";
+//	char *str8 = "-874.e";
+//	char *str9 = "           -894.e";
+//	char *str10 = " ---+++--x874.e";
+//	char *str11 = " b----++++-77.e";
+//	char *str12 = "b8374";
+//	char *str13 = " -b334";
+//	char *str14 = "+874.e";
+//	char *str15 = " -2147483649";
+//	char *str16 = "+2147483648";
 //	char *str18 = malloc(sizeof(char) * 12);
 //	char *str19 = malloc(sizeof(char) * 12);
 //	char *str20 = malloc(sizeof(char) * 20);
 //	char *str21 = malloc(sizeof(char) * 20);
+//	printf("PART I\n");
 //
 //
+////	TODO test_1: Normal test use str1
+//	strrchar_test(ft_strrchr, strrchr, "pricoldec", 'c', "test_1");
 //
-//	printf("strrchr #####################\n");
-//	printf("your func: %c\n", *ft_strrchr(str1, ch));
-//	printf("original func: %c\n", *strrchr(str1, ch));
-//	printf("your func: %s\n", ft_strrchr(str4, ch));
-//	printf("your func: %s\n", strrchr(str4, ch));
-//
-//
+////	TODO test_2: Test without letter
+//	strrchar_test(ft_strrchr, strrchr, "rastaforian", 'c', "test_2");
+////	TODO test_3: Test null terminator
+//	strrchar_test(ft_strrchr, strrchr, "Hero is come back", 0, "test_3");
+////	TODO test_4: Test with many C behind null terminator
+//	strrchar_test(ft_strrchr, strrchr, "\0ccccccccc", 'c',
+//			"test_4");
+////	TODO test_5: Test with null terminators
+//	strrchar_test(ft_strrchr, strrchr, "\0\0\0\0\0\0\0\0\0\0\0\0oo", 0,
+//			"test_5");
+	char s, q;
+	char *str = 0;
+
+	if (!setjmp(buf))
+	{
+		s = *str;
+		longjmp(buf,1);
+		str = &q;
+	} else
+		printf("sosi\n");
 //	printf("strnstr ####################\n");
 //	printf("your func: %s\n", ft_strnstr(str5, str6, 40));
 //	printf("orig func: %s\n", strnstr(str2, str3, 40));
@@ -66,27 +115,27 @@ int main(void)
 //	printf("orig func: %d\n", strncmp(str1, str3, 1000));
 //
 //
-	printf("ATOI ####################\n");
-	printf("your func: %d\n", ft_atoi(str7));
-	printf("orig func: %d\n", atoi(str7));
-	printf("your func: %d\n", ft_atoi(str8));
-	printf("orig func: %d\n", atoi(str8));
-	printf("your func: %d\n", ft_atoi(str14));
-	printf("orig func: %d\n", atoi(str14));
-	printf("your func: %d\n", ft_atoi(str9));
-	printf("orig func: %d\n", atoi(str9));
-	printf("your func: %d\n", ft_atoi(str10));
-	printf("orig func: %d\n", atoi(str10));
-	printf("your func: %d\n", ft_atoi(str11));
-	printf("orig func: %d\n", atoi(str11));
-	printf("your func: %d\n", ft_atoi(str12));
-	printf("orig func: %d\n", atoi(str12));
-	printf("your func: %d\n", ft_atoi(str13));
-	printf("orig func: %d\n", atoi(str13));
-	printf("your func: %d\n", ft_atoi(str15));
-	printf("orig func: %d\n", atoi(str15));
-	printf("your func: %d\n", ft_atoi(str16));
-	printf("orig func: %d\n", atoi(str16));
+//	printf("ATOI ####################\n");
+//	printf("your func: %d\n", ft_atoi(str7));
+//	printf("orig func: %d\n", atoi(str7));
+//	printf("your func: %d\n", ft_atoi(str8));
+//	printf("orig func: %d\n", atoi(str8));
+//	printf("your func: %d\n", ft_atoi(str14));
+//	printf("orig func: %d\n", atoi(str14));
+//	printf("your func: %d\n", ft_atoi(str9));
+//	printf("orig func: %d\n", atoi(str9));
+//	printf("your func: %d\n", ft_atoi(str10));
+//	printf("orig func: %d\n", atoi(str10));
+//	printf("your func: %d\n", ft_atoi(str11));
+//	printf("orig func: %d\n", atoi(str11));
+//	printf("your func: %d\n", ft_atoi(str12));
+//	printf("orig func: %d\n", atoi(str12));
+//	printf("your func: %d\n", ft_atoi(str13));
+//	printf("orig func: %d\n", atoi(str13));
+//	printf("your func: %d\n", ft_atoi(str15));
+//	printf("orig func: %d\n", atoi(str15));
+//	printf("your func: %d\n", ft_atoi(str16));
+//	printf("orig func: %d\n", atoi(str16));
 //
 //
 //	printf("ISALPHA ####################\n");
@@ -281,60 +330,4 @@ int main(void)
 //	printf("what in str: %s\n", str80);
 //	printf("orig func: %lu\n", strlcat(str82, str81, 11));
 //	printf("what in str: %s\n", str82);
-//
-//
-//	printf("SUBDUP ####################\n");
-//	char *str83 = (char *)ft_calloc(5, sizeof(char));
-//	*str83 = 'c';
-//	*(str83 + 1) = 'o';
-//	*(str83 + 2) = 'p';
-//	*(str83 + 3) = 'y';
-//	printf("%s\n", str83);
-//
-//	printf("%s\n", ft_strdup(str83));
-//
-//
-//	printf("SUBSTR ####################\n");
-//	char *str84 = "hecsachrchurchl,.rcuhlchastch\0thutehoarh";
-//	printf("%s\n", ft_substr(str84, 5, 100));
-//
-//
-//	printf("SUBJOIN ####################\n");
-//	char *str85 = "Heso";
-//	char *str86 = "yam1";
-//
-//	printf("your func: %s\n", ft_strjoin(str85, str86));
-//	printf("must be: Hesoyam1\n");
-//
-//
-//	printf("STRTRIM ####################\n");
-//	char *str87 = "Privet, ti pidoras, net I zdes pidoras";
-//	char *str88 = "ide";
-//	printf("your func: %s\n", ft_strtrim(str87, str88));
-//	printf("must be: Prvt, t poras, nt I zs poras\n");
-//
-//
-//	printf("SPLIT ####################\n");
-//	char *str89 = "strlen strbub strkek strlul";
-//	char **stre = ft_split(str89, ' ');
-//	for (int i = 0; i < 4; ++i) {
-//		printf("%s\n", *(stre + i));
-//	}
-//
-//	printf("ITOA ####################\n");
-//	int n = 214868369;
-//	printf("%s\n",ft_itoa(n));
-//	printf("%s\n",ft_itoa(0));
-//
-//	printf("STRMAPI ####################\n");
-//	char *str = "pitetrL";
-//	printf("%s\n", ft_strmapi(str, toAp));
-//
-//	int fd = open("list.txt", O_WRONLY);
-//	ft_putnbr_fd(123, fd);
-//	ft_putstr_fd("oo", fd);
-//	ft_putendl_fd(" uppercot", fd);
-//	ft_putchar_fd('L', fd);
-//	close(fd);
-	return 0;
 }
