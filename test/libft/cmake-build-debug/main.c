@@ -5,7 +5,9 @@
 
 int main(void)
 {
-	char str1[100] = "the cake is";
-	char *str2 = " a lie !";
-	ft_strlcat(str1, str2, 100);
+	char *n = "\t\v\f\r\n \f-06050";
+	int i1 = atoi(n);
+	int i2 = ft_atoi(n);
+	printf("%d\n", i1);
+	printf("%d\n", i2);
 }

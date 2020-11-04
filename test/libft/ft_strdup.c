@@ -20,7 +20,7 @@ char	*ft_strdup(const char *s1)
 	size_t		len_s1;
 
 	len_s1 = ft_strlen(s1);
-	pointer = (char *)ft_calloc(len_s1, sizeof(char));
+	pointer = (char *)ft_calloc(len_s1 + 1, sizeof(char));
 	if (pointer == 0)
 	{
 		errno = ENOMEM;
