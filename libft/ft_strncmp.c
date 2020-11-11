@@ -10,11 +10,13 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-int		ft_strncmp(char *str1, char *str2, int n_ch)
+#include "libft.h"
+
+int		ft_strncmp(const char *str1, const char *str2, size_t n_ch)
 {
 	unsigned char	*temp_s1;
 	unsigned char	*temp_s2;
-	int				i;
+	size_t			i;
 
 	i = 0;
 	if (n_ch == 0)

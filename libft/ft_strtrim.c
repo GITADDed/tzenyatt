@@ -29,7 +29,7 @@ static size_t	id_front(char const *set, char const *str)
 	size_t i;
 
 	i = 0;
-	while (ft_chrcmp(*str, set) == 0 && *(str + 1) != '\0')
+	while (*str != '\0' && ft_chrcmp(*str, set) == 0)
 	{
 		i++;
 		str++;
@@ -51,9 +51,9 @@ char			*ft_strtrim(char const *s1, char const *set)
 	char		*pointer;
 	size_t		i;
 
-	if (s1 == 0 || set == 0)
+	if (s1 == 0)
 		return (0);
-	if (*set == '\0' || *s1 == '\0')
+	if (set == 0 || *set == '\0' || *s1 == '\0')
 		return ((char *)s1);
 	start = id_front(set, s1);
 	finish = id_back(set, s1, ft_strlen(s1), start);

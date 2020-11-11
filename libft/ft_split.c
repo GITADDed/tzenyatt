@@ -13,60 +13,77 @@
 #include "libft.h"
 #include <stdlib.h>
 
-static size_t		lnch(char const *s, char c, size_t *len_words, size_t *par)
+static	char			**new_ptr(const char *s, char c)
 {
-	size_t len;
-	size_t i;
+	size_t		i;
+	char		**ptr;
 
-	i = 0;
-	len = 0;
-	(*len_words) = 0;
-	while (*s)
+	i = 1;
+	while (*s != '\0')
 	{
-		if (*s != c)
-			(*len_words)++;
-		if (*s != c && (*(s + 1) == c || *(s + 1) == '\0'))
-			len++;
-		++s;
+		if (*s != c && *(s + 1) == c)
+			i++;
+		s++;
 	}
-	(*len_words) += len;
-	*par = 0;
-	if (len == 0)
-		len++;
-	return (len);
+	ptr = (char **)malloc(sizeof(char *) * (i + 1));
+	if (ptr == 0)
+		return (0);
+	ptr[i] = 0;
+	return (ptr);
 }
 
-static void			*ft_free(char ***ptr)
+static	char			*ft_new_word(const char **s, char c)
 {
-	free(*ptr);
+	size_t		i;
+	char		*str;
+
+	i = 0;
+	while (*(*s + i) != c && *(*s + i) != '\0')
+		i++;
+	str = (char *)malloc(sizeof(char) * (i + 1));
+	if (str == 0)
+		return (0);
+	i = 0;
+	while (**s != c && **s != '\0')
+	{
+		*(str + i) = **s;
+		(*s)++;
+		i++;
+	}
+	*(str + i) = '\0';
+	return (str);
+}
+
+static void				*ft_free(char **ptr)
+{
+	while (*ptr != 0)
+	{
+		free(*ptr);
+		ptr++;
+	}
 	return (0);
 }
 
-char				**ft_split(char const *s, char c)
+char					**ft_split(char const *s, char c)
 {
-	size_t		i;
-	size_t		j;
 	char		**ptr;
-	size_t		len;
+	size_t		ln_ptr_arr;
 
-	j = 0;
-	if (s == 0 || (ptr = malloc((lnch(s, c, &len, &i) + 1) * 8)) == 0)
+	if (s == 0)
 		return (0);
-	if ((*ptr = (char *)ft_calloc((len + 1), sizeof(char))) == 0)
-		return (ft_free(&ptr));
-	while (*s)
+	ln_ptr_arr = 0;
+	if ((ptr = new_ptr(s, c)) == 0)
+		return (0);
+	while (*s != '\0')
 	{
 		if (*s != c)
-			*(*ptr + i++) = *s;
-		if (*s != c && (*(s + 1) == c || *(s + 1) == '\0'))
-		{
-			*(*ptr + i++) = '\0';
-			*(ptr + ++j) = (*ptr + i);
-		}
+			ptr[ln_ptr_arr++] = ft_new_word(&s, c);
+		if (ln_ptr_arr > 0 && ptr[ln_ptr_arr - 1] == 0)
+			return (ft_free(ptr));
+		if (*s == '\0')
+			break ;
 		s++;
 	}
-	if (j == 0)
-		j++;
-	*(ptr + j) = 0;
+	ptr[ln_ptr_arr] = 0;
 	return (ptr);
 }

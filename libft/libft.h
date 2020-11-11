@@ -22,9 +22,10 @@ typedef struct		s_list
 }					t_list;
 
 char				*ft_strrchr(const char *str, int ch);
-char				*ft_strnstr(char *src, char *sough, int n_ch);
-int					ft_strncmp(char *str1, char *str2, int n_ch);
-int					ft_atoi(char *str);
+char				*ft_strnstr(const char *src, const char *sough,
+		size_t n_ch);
+int					ft_strncmp(const char *str1, const char *str2, size_t n_ch);
+int					ft_atoi(const char *str);
 int					ft_isalpha(int ch);
 int					ft_isdigit(int ch);
 int					ft_isascii(int ch);
