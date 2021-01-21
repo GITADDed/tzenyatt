@@ -10,176 +10,91 @@
  * */
 /*                                                                            */
 /* ************************************************************************** */
-#include <stdio.h>
+
 #include "get_next_line.h"
 #include <stddef.h>
 
-//int 	my_readV2(int fd, char **line, char **buf, char **subbuff)
-//{
-//	char *point1;
-//	char *point2;
-//	char *point3;
-//
-//	if (**subbuff != '\0')
-//	{
-//		point1 = *subbuff;
-//		point2 = *subbuff;
-//		while (*point1 != '\n' && *point1 != '\0')
-//			point1++;
-//		if (*point1 == '\n')
-//			*line = my_strjoin(*line, *subbuff);
-//		else
-//			my_readV2(fd, line, buf, subbuff);
-////		free(*line);
-////		if ((*line = (char *) malloc((point1 - *subbuff + 1) * sizeof(char))) ==
-////				0)
-////			return (-1);
-////
-////		point3 = *line;
-////		while (point2 != point1) {
-////			*point3 = *point2;
-////			point3++;
-////			point2++;
-////		}
-////		*point3 = '\0';
-//		if (*point1 == '\0')
-//		{
-//			point2 = *subbuff;
-//			while (point2 != point1)
-//			{
-//				*point2 = '\0';
-//				point2++;
-//			}
-//		}
-//		else
-//		{
-//			point1++;
-//			point2 = *subbuff;
-//			while (*point1 != '\0')
-//			{
-//				*point2 = *point1;
-//				point2++;
-//				point1++;
-//			}
-//			while (point2 != point1)
-//			{
-//				*point2 = '\0';
-//				point2++;
-//			}
-//		}
-//		return (1);
-//	}
-//	if (read(fd, *buf, BUFFER_SIZE) == -1)
-//		return (0);
-//	point1 = *buf;
-//	point2 = *buf;
-//
-//	while (*point1 != '\n' && *point1 != '\0')
-//		point1++;
-//
-//	if ((*line = (char *)malloc((point1 - *buf + 1) * sizeof(char))) == 0)
-//		return (-1);
-//	point3 = *line;
-//
-//	while (point2 != point1)
-//	{
-//		*point3 = *point2;
-//		point3++;
-//		point2++;
-//	}
-//	*point3 = '\0';
-//
-//	point1++;
-//	point3 = *subbuff;
-//	while (*point1 != '\0')
-//	{
-//		*point3 = *point1;
-//		point3++;
-//		point1++;
-//	}
-//
-//	return (1);
-//}
-//
-//int		get_next_line(int fd, char **line)
-//{
-//	static char *subbuff;
-//	char *buff;
-//	size_t i;
-//
-//	//  Выделяем память под буффер, в который будем читать строку
-//	if ((buff = (char *)malloc(sizeof(char) * BUFFER_SIZE)) == 0)
-//		return (-1);
-//	i = 0;
-//	// Выделяем память под буффер если он не создан, который хранит не
-//	// вывденные строки из файла
-//	// Далее иницииализируем эти буфферы
-//	if (subbuff == 0)
-//	{
-//		if ((subbuff = (char *) malloc(sizeof(char) * (BUFFER_SIZE + 1))) == 0)
-//			return (-1);
-//		// После выделения памяти инициализируем эти буфферы
-//		while (i < BUFFER_SIZE + 1) {
-//			buff[i] = '\0';
-//			subbuff[i] = '\0';
-//			i++;
-//		}
-//	}
-//	else
-//	{
-//		while (i < BUFFER_SIZE + 1)
-//		{
-//			buff[i] = '\0';
-//			i++;
-//		}
-//	}
-//	// Запуск функции, которая рекурсивно пишет в line строку
-//	return (my_readV2(fd, line, &buff, &subbuff));
-//}
+size_t		ft_strlcpy(char *dest, const char *src, size_t destsize)
+{
+	size_t i;
+	size_t s;
 
-//char	*check_subbuff(char *subbuf, char **line)
-//{
-//	if (subbuf)
-//	{
-//
-//	}
-//	else
-//	{
-//		*line =
-//	}
-//}
+	if (dest == 0 && src == 0)
+		return (0);
+	s = ft_strlen(src);
+	if (destsize == 0)
+		return (s);
+	i = 0;
+	while (i < destsize - 1 && *(src + i))
+	{
+		*(dest + i) = *(src + i);
+		++i;
+	}
+	*(dest + i) = '\0';
+	return (s);
+}
+
+void 	clr(char *str)
+{
+	while (*str)
+	{
+		*str = '\0';
+		str++;
+	}
+}
+
+char	*subbuff_checker(char *subbuff, char **line)
+{
+	char *point_to_nl;
+
+	point_to_nl = 0;
+	if (subbuff)
+		if ((point_to_nl = ft_strchr(subbuff, '\n')))
+		{
+			*point_to_nl = '\0';
+			if ((*line = ft_strdup(subbuff)) == 0)
+			{
+				errno = ENOMEM;
+				return (0);
+			}
+			ft_strlcpy(subbuff, ++point_to_nl, ft_strlen(subbuff));
+		}
+		else
+		{
+			*line = ft_strdup(subbuff);
+			(*line == 0) ? errno = ENOMEM : clr(subbuff);
+		}
+	else
+		*line = ft_calloc(1, sizeof(char));
+	return (point_to_nl);
+}
 
 int		get_next_line(int fd, char **line)
 {
-	static char *subbuff;
-	char buf[BUFFER_SIZE + 1];
-	int readed_byte;
-	char *p_to_nl;
-	int flag;
+	static char		*subbuff;
+	char			buf[BUFFER_SIZE + 1];
+	size_t			readed_byte;
+	char			*p_to_nl;
+	char			*p;
 
-	if (subbuff)
-		*line = ft_strdup(subbuff);
-	else
+	if ((*line = ft_calloc(1, sizeof(char))) == 0)
+		return (-1);
+	p_to_nl = subbuff_checker(subbuff, line);
+	while(!p_to_nl && (readed_byte = read(fd, buf, BUFFER_SIZE)))
 	{
-		*line = (char *)malloc(sizeof(char) * 1);
-		if(*line == 0)
+		if (errno == ENOMEM)
 			return (-1);
-		**line = '\0';
-	}
-	flag = 1;
-	while(flag && (readed_byte = read(fd, buf, BUFFER_SIZE)))
-	{
 		buf[readed_byte] = '\0';
 		if ((p_to_nl = ft_strchr(buf, '\n')))
 		{
 			*p_to_nl = '\0';
-			flag = 0;
-			p_to_nl++;
-			subbuff = ft_strdup(p_to_nl);
+			subbuff = ft_strdup(++p_to_nl);
 		}
+		p = *line;
 		*line = ft_strjoin(*line, buf);
+		free(p);
 	}
-	return (0);
+	return ((readed_byte || ft_strlen(subbuff) || ft_strlen(*line)) ? 1 : 0);
 }
 
 #include <stdio.h>
@@ -188,12 +103,18 @@ int main(int argc, char **argv)
 {
 	char *line;
 	int fd;
+	int status;
 	char *path = "/Users/tzenyatt/CLionProjects/test/gnl/file";
 	if (argc > 1)
 		path = argv[1];
 	fd = open(path, O_RDONLY);
-		get_next_line(fd, &line);
-		printf("%s\n", line);
-	get_next_line(fd, &line);
-	printf("%s\n", line);
+//	for (int i = 0; i < 62; ++i) {
+//		status = get_next_line(fd, &line);
+//		printf("%d) %s | status = %d\n",i + 1, line, status);
+//	}
+	while ((status = get_next_line(fd, &line)))
+	{
+		printf("status = %d, %s\n", status, line);
+	}
+	printf("status = %d\n", status);
 }
