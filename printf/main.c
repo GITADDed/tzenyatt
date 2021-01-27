@@ -3,11 +3,7 @@
 
 int main()
 {
-    char *line = "Hello\n";
-    int five = 123;
-    unsigned int k = 44542;
-    ft_printf("%10d", 23);
-    char *line2 = "hellocalcc";
-    printf("%10d", 23);
+    ft_printf("%11d|\n", 32);
+    printf("%10.11d|\n", 32);
     return (0);
 }
