@@ -11,6 +11,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdio.h>
 #include "get_next_line.h"
 #include <stddef.h>
 
@@ -77,8 +78,6 @@ int		get_next_line(int fd, char **line)
 	char			*p_to_nl;
 	char			*p;
 
-	if ((*line = ft_calloc(1, sizeof(char))) == 0)
-		return (-1);
 	p_to_nl = subbuff_checker(subbuff, line);
 	while(!p_to_nl && (readed_byte = read(fd, buf, BUFFER_SIZE)))
 	{
@@ -104,7 +103,7 @@ int main(int argc, char **argv)
 	char *line;
 	int fd;
 	int status;
-	char *path = "/Users/tzenyatt/CLionProjects/test/gnl/file";
+	char *path = "/home/sergey/tzenyatt/gnl/file";
 	if (argc > 1)
 		path = argv[1];
 	fd = open(path, O_RDONLY);
@@ -112,9 +111,16 @@ int main(int argc, char **argv)
 //		status = get_next_line(fd, &line);
 //		printf("%d) %s | status = %d\n",i + 1, line, status);
 //	}
-	while ((status = get_next_line(fd, &line)))
-	{
-		printf("status = %d, %s\n", status, line);
-	}
-	printf("status = %d\n", status);
+	//while ((status = get_next_line(fd, &line)))
+//	{
+//		printf("status = %d, %s\n", status, line);
+//	}
+//	printf("status = %d\n", status);
+
+    get_next_line(fd, &line);
+    printf("%s\n", line);
+    get_next_line(fd, &line);
+    printf("%s\n", line);
+    get_next_line(fd, &line);
+    printf("%s\n", line);
 }
