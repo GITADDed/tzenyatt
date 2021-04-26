@@ -1,25 +1,35 @@
-.PHONY : all clean fclean re
+.PHONY: all clean fclean re
 
-SRC := main.c
+OBJ:= ./bin
 
-libs := -lglut -lGLU -lGL
+SRC:= ./src
 
-OBJ := $(SRC:.c=.o)
+SRCS:= $(wildcard $(SRC)/*.c)
 
-CC := gcc
+OBJS:= $(patsubst $(SRC)/%.c, $(OBJ)/%.o, $(SRCS))
 
-NAME := miniRT.out
+MVOBJ = $(wildcard bin/*.o)
 
-all:			$(NAME)
+CC:= gcc
 
-$(NAME):		$(OBJ)
-								$(CC) -o $(NAME) $(OBJ) $(libs)
-				./$(NAME)
+CFLAGS:= -Wall -Wextra -Werror -Iinclude -g
+# -framework Metal -framework AppKit
+LIB:= -lm
+
+NAME:= miniRT.exe
+
+all:		$(NAME)
+
+$(OBJ)/%.o: $(SRC)/%.c | $(OBJ)
+			$(CC) $(CFLAGS) -c $< -o $@
+
+$(NAME):	$(OBJS)
+			$(CC) $(OBJS) libmlx.dylib -o $(NAME) $(LIB) 
 
 clean:
-				rm -rf $(OBJ)
+			rm -rf $(MVOBJ)
 
-fclean:			clean
-				rm -rf $(NAME)
+fclean:		clean
+			rm -rf $(NAME)
 
-re:				fclean all
+re:			fclean all
